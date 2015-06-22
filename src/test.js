@@ -6,11 +6,9 @@ var main = from("src").grab("*.js").and(
 	logPaths
 );
 
-build(main);
-
 function logPaths(files) {
 	console.log("All the paths:");
-	files.map(function(file) {
+	files.items.map(function(file) {
 		console.log("\t" + file.path);
 	});
 	return files;
