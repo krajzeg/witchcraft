@@ -6,6 +6,8 @@ var main = from("src").grab("*.js").and(
 	logPaths
 );
 
+build(main);
+
 function logPaths(files) {
 	console.log("All the paths:");
 	files.items.map(function(file) {

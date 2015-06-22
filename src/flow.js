@@ -39,7 +39,7 @@ function appendStep(lazyValue, step) {
 function deepResolve(promise) {
 	return Promise.resolve(promise).then(function(result) {
 		if (result.items) {
-			return Promise.all(result.items).then(function(resolvedItems) {
+			return Promise.all(result.items.map(deepResolve)).then(function(resolvedItems) {
 				result.items = resolvedItems;
 				return result;
 			});
