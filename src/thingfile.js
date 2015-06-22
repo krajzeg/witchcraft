@@ -1,9 +1,11 @@
-var main = from("src").grab("*.js").and(
-	each(logPath, logPath),
-	each(logPath)
-);
+recipe("main")(
 
-build(main);
+	from("src").grab("*.js").and(
+		each(logPath, logPath),
+		each(logPath)
+	)
+
+);
 
 function logPath(file) {
 	console.log(file.path);

@@ -27,4 +27,7 @@ createThingfileGlobals().then(function(thingGlobals) {
 	
 	// require the thingfile
 	require('./thingfile');
+
+	// run the last recipe
+	build(recipe.last);
 });
