@@ -1,17 +1,15 @@
 var from = require('./from-grab').from;
 var build = require('./build').build;
+var each = require('./each').each;
 
 var main = from("src").grab("*.js").and(
-	logPaths,
-	logPaths
+	each(logPath, logPath),
+	each(logPath)
 );
 
 build(main);
 
-function logPaths(files) {
-	console.log("All the paths:");
-	files.items.map(function(file) {
-		console.log("\t" + file.path);
-	});
-	return files;
+function logPath(file) {
+	console.log(file.path);
+	return file;
 }

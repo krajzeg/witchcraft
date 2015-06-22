@@ -3,13 +3,23 @@ var Promise = require('bluebird');
 module.exports = Flow;
 
 function Flow(lazyValue) {
-	this.lazyValue = lazyValue;
+	// ensure laziness
+	if (typeof lazyValue !== 'function')
+		this.lazyValue = function() { return lazyValue; };
+	else
+		this.lazyValue = lazyValue;
+
+	// initialize to unresolved
 	this.resolved = false;
 	this.resolvedValue = undefined;
 };
 Flow.prototype = {
 	and: function() {
 		var steps = [].slice.apply(arguments);
+		return this.andApplySteps(steps);
+	},
+
+	andApplySteps: function(steps) {
 		this.lazyValue = steps.reduce(appendStep, this.lazyValue);
 		return this;
 	},
