@@ -1,6 +1,7 @@
 var Promise = require('bluebird');
 var path = require('path');
-var fs = require('fs');
+var promisify = require('../util/promises').promisifyNodeStyle;
+var readFile = promisify(require('fs').readFile);
 
 module.exports = File;
 
@@ -16,18 +17,8 @@ File.prototype = {
 }
 
 File.read = function(root, relativePath) {
-	return readFileContents(path.join(root, relativePath))
+	return readFile(path.join(root, relativePath))
 		.then(function(contents) {
-			return new File(root, relativePath, contents);
+			return new File(root, relativePath, contents.toString());
 		});
-}
-
-
-function readFileContents(path) {
-	return new Promise(function(resolve, reject) {
-		fs.readFile(path, function(err, f) {
-			if (err) return reject(err);
-			return resolve(f.toString());
-		});
-	});
 }

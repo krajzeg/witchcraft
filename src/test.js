@@ -1,6 +1,6 @@
-var from = require('./from-grab').from;
-var build = require('./build').build;
-var each = require('./each').each;
+var from = require('./modules/from-grab').from;
+var build = require('./modules/build').build;
+var each = require('./modules/each').each;
 
 var main = from("src").grab("*.js").and(
 	each(logPath, logPath),

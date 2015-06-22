@@ -1,6 +1,6 @@
 var Promise = require('bluebird');
-var Collection = require('./collection');
-var Flow = require('./flow');
+var Collection = require('../abstractions/collection');
+var Flow = require('../abstractions/flow');
 
 module.exports = {
 	each: each

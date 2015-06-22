@@ -1,10 +1,12 @@
 var path = require('path');
-var glob = require('glob');
 var Promise = require('bluebird');
 
-var File = require('./file');
-var Collection = require('./collection');
-var Flow = require('./flow');
+var File = require('../abstractions/file');
+var Collection = require('../abstractions/collection');
+var Flow = require('../abstractions/flow');
+
+var promisify = require('../util/promises').promisifyNodeStyle;
+var glob = promisify(require('glob'));
 
 module.exports = {
 	from: from
@@ -17,7 +19,7 @@ function from(rootDirectory) {
 	function grab(pattern) {
 		return new Flow(function() {
 			var globPattern = path.join(rootDirectory, pattern);
-			var promisedFiles = doAGlob(globPattern)
+			var promisedFiles = glob(globPattern)
 				.then(function(absolutePaths) {
 					return absolutePaths.map(function(absolutePath) {
 						var relativePath = path.relative(rootDirectory, absolutePath);
@@ -28,13 +30,4 @@ function from(rootDirectory) {
 			return new Collection(promisedFiles);
 		});
 	}
-}
-
-function doAGlob(pattern) {
-	return new Promise(function(resolve, reject) {
-		glob(pattern, {}, function(err, files) {
-			if (err) return reject(err);
-			return resolve(files);
-		});
-	});
 }
