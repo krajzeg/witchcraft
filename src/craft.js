@@ -18,6 +18,7 @@ function craft(options) {
 		// add our modules to the global object so they'll be easily accessible
 		// to the craftfile
 		_.extend(global, ourGlobals);
+		console.log(ourGlobals);
 
 		// require the craftfile
 		var craftfilePath = path.join(process.cwd(), 'craftfile.js');
@@ -25,8 +26,14 @@ function craft(options) {
 			throw new Error("Cannot find craftfile at: " + craftfilePath);
 		require(craftfilePath);
 
-		// build the last recipe
-		return build(recipe.last);
+		// find the right recipe
+		var recipeName = options.recipeName || recipe.last;
+		var chosenRecipe = recipe.all[recipeName];
+		if (!chosenRecipe)
+			throw new Error("No recipe called '" + recipeName + "' found in the craftfile.");
+
+		// build it!
+		return build(chosenRecipe);
 	});
 }
 
@@ -46,7 +53,7 @@ function discoverGlobals() {
 }
 
 function applyDefaults(options) {
-	return _.defaults(options || {}, {
-
+	return _.defaults(options || {}, {		
+		craftFile: path.join(process.cwd(), 'craftfile.js')
 	});
 }

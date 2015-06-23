@@ -6,7 +6,9 @@ module.exports = {
 
 function recipe(name) {
 	return function(flow) {
-		recipe.all = _.extend(recipe.all || {}, {name: flow});
-		recipe.last = flow;
+		recipe.all = recipe.all || {};
+		recipe.all[name] = flow;
+		
+		recipe.last = name;
 	}
 }
