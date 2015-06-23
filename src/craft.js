@@ -36,9 +36,30 @@ function craft(options) {
 	});
 }
 
-function discoverGlobals() {
-	var modulePattern = path.join(__dirname, "modules/*.js");
-	return glob(modulePattern).then(function(moduleFiles) {
+function applyDefaults(options) {
+	return _.defaults(options || {}, {		
+		craftFile: path.join(process.cwd(), 'craftfile.js')
+	});
+}
+
+function gatherModules() {
+	// simple built-in modules that simply live in the modules subdir
+	var localModulePattern = path.join(__dirname, "modules/*.js");
+	// separate npm modules that are shipped with the base witchcraft build
+	var vendoredPluginsPattern = path.join(__dirname, "../node_modules/witch-*");
+
+	var patterns = [localModulePattern, vendoredPluginsPattern];
+	var globPromises = patterns.map(function(pattern) {
+		return glob(pattern); // this function prevents glob() from getting more than 1 parameter
+	});
+	return Promise.all(globPromises).then(function(globResults) {
+		console.log(globResults);
+		return [].concat.apply([], globResults);
+	});
+}
+
+function discoverGlobals() {	
+	return gatherModules().then(function(moduleFiles) {
 		return moduleFiles.map(function(moduleFile) {
 			var moduleName = moduleFile.replace(".js", "");
 			var module = require(moduleName);
@@ -48,11 +69,5 @@ function discoverGlobals() {
 		return exportsObjects.reduce(function(globals, exports) {
 			return _.extend(globals, exports);
 		}, {});
-	});
-}
-
-function applyDefaults(options) {
-	return _.defaults(options || {}, {		
-		craftFile: path.join(process.cwd(), 'craftfile.js')
 	});
 }
