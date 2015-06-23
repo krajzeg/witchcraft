@@ -1,6 +1,6 @@
 recipe("main")(
 
-	from("src").grab("*.js").and(
+	from("src").grab("**/*.js").and(
 		each(logPath, logPath),
 		each(logPath)
 	)
