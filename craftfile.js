@@ -1,13 +1,7 @@
 recipe("main")(
 
 	from("src").grab("**/*.js").and(
-		each(logPath, logPath),
-		each(logPath)
+		each(writeTo("build/files"))
 	)
 
 );
-
-function logPath(file) {
-	console.log(file.path);
-	return file;
-}
