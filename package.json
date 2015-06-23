@@ -1,6 +1,7 @@
 {
   "name": "witchcraft",
   "version": "0.1.0",
+  "repository": "krajzeg/witchcraft",
   "description": "A simple anything-builder based on promises and straightforward syntax.",
   "main": "src/craft.js",
   "bin": {
