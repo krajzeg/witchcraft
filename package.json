@@ -1,13 +1,16 @@
 {
-  "name": "thingdoer",
+  "name": "witchcraft",
   "version": "0.1.0",
-  "description": "",
-  "main": "index.js",
-  "scripts": {
+  "description": "A simple anything-builder based on promises and straightforward syntax.",
+  "main": "src/craft-cli.js",
+  "bin": {
+    "craft": "./src/craft-cli.js"
+  },
+  "scripts": {    
     "test": "echo \"Error: no test specified\" && exit 1"
   },
-  "author": "",
-  "license": "ISC",
+  "author": "Jakub Wasilewski <wasyl@wasyl.eu>",
+  "license": "MIT",
   "dependencies": {
     "bluebird": "^2.9.30",
     "glob": "^5.0.10",
