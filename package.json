@@ -7,7 +7,7 @@
     "craft": "./src/bin/craft-cli.js"
   },
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "mocha node_modules/witch-*/test/*.js"
   },
   "author": "Jakub Wasilewski <wasyl@wasyl.eu>",
   "license": "MIT",
@@ -17,7 +17,9 @@
     "lodash": "^3.9.3",
     "mkdirp": "^0.5.1",
     "yargs": "^3.12.0",
-
     "witch-yaml": "1.0.0"
+  },
+  "devDependencies": {
+    "mocha": "^2.2.5"
   }
 }
