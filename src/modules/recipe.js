@@ -8,9 +8,11 @@ module.exports = {
 
 function recipe(name) {
 	return function() {
+		// get the list of Flows that was passed inside
 		var flows = [].slice.apply(arguments);
 		flows = flows.map(resolveFlow);
 
+		// if we have a list, combine all those flows into one
 		var flow;
 		if (flows.length == 1) {
 			flow = flows[0];
@@ -18,9 +20,15 @@ function recipe(name) {
 			flow = Flow.combine(flows);
 		}
 
+		// add some logging
+		flow.and(function(result) {
+			console.log("Brewed '" + name + "'.");
+			return result;
+		});
+
+		// and keep it all for future reference
 		recipe.all = recipe.all || {};
-		recipe.all[name] = flow;
-		
+		recipe.all[name] = flow;			
 		recipe.last = name;
 	}
 }

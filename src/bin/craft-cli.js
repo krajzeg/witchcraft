@@ -6,7 +6,7 @@ var craft = require('../craft');
 var args = require('yargs').argv;
 
 return craft(parseOptions(args)).then(function() {
-	console.log("Done.");
+	console.log("Your recipe is ready.");
 }).catch(function(err) {
 	if (err instanceof BuildError) {	
 		console.error(err.message);
