@@ -36,6 +36,16 @@ Flow.prototype = {
 		});
 	}
 }
+Flow.combine = combine;
+
+
+function combine(flows) {
+	return new Flow(function() {
+		return Promise.all(flows.map(function(flow) {
+			return flow.resolve();
+		}));
+	});
+}
 
 function appendStep(lazyValue, step) {
 	return function() {

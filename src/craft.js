@@ -47,13 +47,14 @@ function gatherModules() {
 	var localModulePattern = path.join(__dirname, "modules/*.js");
 	// separate npm modules that are shipped with the base witchcraft build
 	var vendoredPluginsPattern = path.join(__dirname, "../node_modules/witch-*");
+	// npm modules that are installed in the current directory
+	var cwdPluginsPattern = path.join(process.cwd(), "node_modules/witch-*");
 
-	var patterns = [localModulePattern, vendoredPluginsPattern];
+	var patterns = [localModulePattern, vendoredPluginsPattern, cwdPluginsPattern];
 	var globPromises = patterns.map(function(pattern) {
 		return glob(pattern); // this function prevents glob() from getting more than 1 parameter
 	});
 	return Promise.all(globPromises).then(function(globResults) {
-		console.log(globResults);
 		return [].concat.apply([], globResults);
 	});
 }
