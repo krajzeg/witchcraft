@@ -8,7 +8,7 @@
     "craft": "./src/bin/craft-cli.js"
   },
   "scripts": {
-    "test": "mocha node_modules/witch-*/test/*.js"
+    "test": "mocha test/*.js node_modules/witch-*/test/*.js"
   },
   "author": "Jakub Wasilewski <wasyl@wasyl.eu>",
   "license": "MIT",
