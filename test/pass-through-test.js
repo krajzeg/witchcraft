@@ -8,7 +8,6 @@ describe("pass()..through()", function() {
 	var file = {contents: "Hello."};
 	
 	it("should work with synchronous functions", function(done) {
-		var file = {contents: "Hello."};
 		var fileToUpper = pass(CONTENTS).through(function(s) { return s.toUpperCase(); });
 
 		fileToUpper(file).then(function(result) {
@@ -31,11 +30,21 @@ describe("pass()..through()", function() {
 			assert.equal(result.contents, "HELLO.");
 		}).then(done).catch(done);
 	});
+
+	it("should be able to pass additional parameters", function(done) {
+		var fileToUpper = pass('toUpperCase', CONTENTS).through(function(method, obj) {
+			return obj[method]();
+		});
+
+		fileToUpper(file).then(function(result) {
+			assert.equal(result.contents, "HELLO.");
+		}).then(done).catch(done);
+	});
 });
 
 function promiseToUpper(s) {
 	return new Promise(function(resolve) {
-		setTimeout(function() {
+		process.nextTick(function() {
 			resolve(s.toUpperCase());
 		});
 	});
